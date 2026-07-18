@@ -1,0 +1,4 @@
+# Optional CUDA acceleration (install after requirements.txt)
+-r requirements.txt
+cupy-cuda12x>=13.0.0
+torch>=2.1.0

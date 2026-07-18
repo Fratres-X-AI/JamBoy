@@ -1,0 +1,63 @@
+# JamBoy — Raspberry Pi 5 + Arducam IMX296 + Pixhawk TELEM2 (FTDI)
+# Usage: python scripts/main_navigator.py --config config/pi5_pixhawk.yaml
+
+compute:
+  device: cpu
+
+camera:
+  global_shutter: true
+  rolling_shutter_fallback: false
+  sensor_type: "imx296"
+  frame_width: 1456
+  frame_height: 1088
+  crop_size: 320
+  focal_length_px: 500.0
+  intrinsics:
+    fx: 500.0
+    fy: 500.0
+    cx: 728.0
+    cy: 544.0
+    distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+  active_ir_speckle: false
+
+hardware:
+  camera_source: v4l2
+  camera_device: "/dev/video0"
+  frame_rate_hz: 30
+  imu_rate_hz: 50
+  baro_rate_hz: 10
+  imu_source: mavlink
+  baro_source: mavlink
+
+mavlink:
+  sim_mode: false
+  connection: "serial:/dev/ttyUSB0:57600"
+  command_hz: 5
+  prefer_vision_position: true
+  fallback_do_reposition: true
+
+navigator:
+  cycle_deadline_ms: 33.0
+  dead_reckon_max_sec: 60.0
+
+geo_match:
+  descriptor: orb
+  nfeatures: 400
+  match_hz: 5
+  min_confidence: 0.25
+
+optical_flow:
+  max_corners: 80
+  min_tracked_features: 4
+  altitude_m: 100.0
+
+barometer:
+  enabled: true
+  default_altitude_m: 100.0
+
+maps:
+  directory: "data/maps"
+  default_map: "test_tile.tif"
+
+sim:
+  output_dir: "data/sim/output"

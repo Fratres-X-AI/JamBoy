@@ -1,0 +1,166 @@
+compute:
+  device: cuda
+  batch_frames: 32
+  warmup_frames: 5
+  burn_streams_matmul: 8
+  burn_seconds: 20
+  burn_matmul_size: 8192
+
+camera:
+  global_shutter: true
+  rolling_shutter_fallback: true
+  readout_time_ms: 32.0
+  sensor_type: "global_shutter"
+  active_ir_speckle: true
+  nir_wavelength_nm: 850
+  speckle_seed: 4242
+  speckle_intensity: 0.55
+  textureless_map_flatten: false
+  low_light_map_darken: false
+  focal_length_px: 500.0
+  frame_width: 640
+  frame_height: 480
+  crop_size: 320
+  intrinsics:
+    fx: 500.0
+    fy: 500.0
+    cx: 320.0
+    cy: 240.0
+    distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+  motion_blur:
+    enabled: false
+    max_blur_px: 2.0
+    exposure_s: 0.01
+
+extrinsics:
+  camera_to_body:
+    translation_m: [0.0, 0.0, -0.05]
+    rotation_deg: [0.0, 90.0, 0.0]
+
+vibration:
+  enabled: false
+  freq_hz: [12.0, 18.0, 25.0]
+  amplitude_px: [2.5, 1.5, 0.8]
+  prop_wash_freq_hz: [48.0, 96.0]
+  prop_wash_amplitude_px: [1.2, 0.6]
+  prop_wash_enabled: true
+  prop_wash_band_fraction: 0.14
+  prop_wash_strength: 0.45
+  roll_deg: 2.0
+  pitch_deg: 3.0
+  jitter_px: 0.5
+
+realism:
+  enabled: false
+  vibration: true
+  motion_blur: true
+  variable_lighting: true
+  partial_occlusion: true
+  partial_occlusion_prob: 0.05
+  lighting_base: 1.0
+  lighting_swing: 0.15
+  altitude_variation_m: 5.0
+
+geo_match:
+  descriptor: orb
+  nfeatures: 500
+  lowe_ratio: 0.7
+  min_good_matches: 8
+  min_confidence: 0.15
+  min_inlier_ratio: 0.25
+  repeating_texture_reject: true
+  partial_match_ratio: 0.5
+  reference_altitude_m: 100.0
+  altitude_scale_tolerance: 0.35
+  ransac_threshold: 5.0
+  match_hz: 30
+  max_candidate_tiles: 4
+  edge_mode: hybrid
+  edge_canny: true
+  tile_size: 512
+  search_radius_m: 2000.0
+  max_scale_error: 0.35
+  template_fallback: true
+  template_min_score: 0.40
+
+barometer:
+  enabled: true
+  default_altitude_m: 100.0
+  meas_noise_m: 2.0
+  noise_variance: 4.0
+  source: mavlink
+
+optical_flow:
+  max_corners: 100
+  quality_level: 0.01
+  min_distance: 10
+  min_tracked_features: 4
+  flow_hz: 30
+  altitude_m: 100.0
+  rolling_shutter_correction: true
+
+navigator:
+  cycle_deadline_ms: 100.0
+  deadline_streak_limit: 8
+  dead_reckon_max_sec: 60.0
+  terminal_range_m: 100.0
+  max_position_uncertainty_m: 50.0
+  geo_min_confidence: 0.15
+  max_geo_jump_m: 25.0
+  innovation_gate: 9.21
+  terminal:
+    tracker_type: CSRT
+    target_width_m: 2.0
+    init_bbox_fraction: 0.15
+    min_confidence: 0.35
+    focal_px: 500.0
+
+ekf:
+  process_noise:
+    position: 0.5
+    velocity: 1.0
+  measurement_noise:
+    optical_flow: 2.0
+    geo_match: 5.0
+  process_noise_pos: 0.5
+  process_noise_vel: 1.0
+  meas_noise_flow: 2.0
+  meas_noise_geo_base: 5.0
+  meas_noise_baro: 4.0
+  innovation_gate: 9.0
+
+mavlink:
+  connection: "udp:127.0.0.1:14550"
+  sim_mode: true
+  command_hz: 5
+  health_report_hz: 1
+  prefer_vision_position: true
+  fallback_do_reposition: true
+  system_id: 1
+  component_id: 191
+
+hardware:
+  camera_source: v4l2
+  camera_device: "/dev/video0"
+  camera_topic: ""
+  frame_rate_hz: 30
+  imu_rate_hz: 200
+  baro_rate_hz: 50
+  imu_source: mavlink
+  baro_source: mavlink
+
+maps:
+  directory: "data/maps"
+  default_map: "test_tile.tif"
+  load_all_tifs: true
+  season_maps:
+    - "test_tile.tif"
+    - "test_tile_winter.tif"
+
+sim:
+  output_dir: "data/sim/output"
+  frames_dir: "data/sim/frames"
+  degraded_dir: "data/sim/degraded"
+
+bench:
+  repeat_passes: 50

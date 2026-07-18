@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main, public-release]
+  pull_request:
+    branches: [main, public-release]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y libgl1 gdal-bin libgdal-dev
+      - name: Install Python deps (CPU + dev)
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+          pip install -e .
+      - name: Generate dummy data
+        run: python scripts/generate_dummy_data.py
+      - name: pytest
+        env:
+          PYTHONPATH: src
+        run: pytest -q --tb=short
+      - name: CPU simulation profile
+        env:
+          PYTHONPATH: src
+        run: python scripts/run_simulation.py --cpu --profile --json-only
+      - name: Sim readiness gate
+        env:
+          PYTHONPATH: src
+        run: python scripts/validate_sim.py --json-only

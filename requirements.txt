@@ -1,0 +1,10 @@
+# CPU runtime (default install / CI)
+opencv-python>=4.8.0
+numpy>=1.24.0
+pymavlink>=2.4.40
+rasterio>=1.3.0
+pyproj>=3.6.0
+pyyaml>=6.0
+filterpy>=1.4.5
+psutil>=5.9.0
+matplotlib>=3.7.0
