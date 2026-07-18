@@ -16,6 +16,7 @@ jamboy_pod_sync.tgz
 data/maps/*.tif
 data/maps/*.tiff
 data/sim/frames/
+data/sim/degraded/
 data/sim/output/
 data/pod_*
 .pytest_cache/
