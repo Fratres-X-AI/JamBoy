@@ -5,6 +5,8 @@
 
 **Jam-proof GPS-denied navigation** for attritable drones: optical flow + offline map geo-registration + EKF fusion + barometric altitude.
 
+Name note: **JamBoy** = GPS **jam** + **Game Boy**-era pun. Nothing to do with historical golf caddie slang.
+
 JamBoy is a **navigation layer**, not a targeting or weapons system. It is sim-validated on synthetic data; it is **not flight-certified**.
 
 ## What it does
