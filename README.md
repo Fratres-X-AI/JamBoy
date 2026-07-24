@@ -111,6 +111,23 @@ pip install -e ".[gpu,dev]"
 bash scripts/run_sim_confident.sh
 ```
 
+## References
+
+Methods and standards this stack builds on (not an exhaustive survey):
+
+1. **B. D. Lucas and T. Kanade**, “An Iterative Image Registration Technique with an Application to Stereo Vision,” *IJCAI*, 1981. — Optical flow (`optical_flow.py`).
+2. **J.-Y. Bouguet**, “Pyramidal Implementation of the Lucas Kanade Feature Tracker,” Intel / OpenCV technical report, 2000. — Pyramid LK used in practice via OpenCV.
+3. **E. Rublee, V. Rabaud, K. Konolige, and G. Bradski**, “ORB: An Efficient Alternative to SIFT or SURF,” *ICCV*, 2011. — Primary geo-match descriptors (`geo_match.py`).
+4. **D. G. Lowe**, “Distinctive Image Features from Scale-Invariant Keypoints,” *IJCV*, 2004. — Optional SIFT path + Lowe ratio test for match filtering.
+5. **M. A. Fischler and R. C. Bolles**, “Random Sample Consensus: A Paradigm for Model Fitting with Applications to Image Analysis and Automated Cartography,” *CACM*, 1981. — Homography estimation / outlier rejection (RANSAC).
+6. **R. E. Kalman**, “A New Approach to Linear Filtering and Prediction Problems,” *Journal of Basic Engineering*, 1960. — Recursive estimation backbone for the EKF.
+7. **Y. Bar-Shalom, X. R. Li, and T. Kirubarajan**, *Estimation with Applications to Tracking and Navigation*. Wiley, 2001. — Multi-sensor fusion, innovation / Mahalanobis gating practices used in `ekf.py`.
+8. **G. Conte and P. Doherty**, “An Integrated UAV Navigation System Based on Aerial Image Matching,” *IEEE Aerospace Conference*, 2008. — Aerial image / map registration for GPS-denied flight (geo-match motivation).
+9. **A. I. Mourikis and S. I. Roumeliotis**, “A Multi-State Constraint Kalman Filter for Vision-Aided Inertial Navigation,” *ICRA*, 2007. — Broader vision–inertial navigation context (JamBoy uses a simpler 6-state EKF, not full MSCKF).
+10. **A. Lukežič, T. Vojíř, L. Čehovin Zajc, J. Matas, and M. Kristan**, “Discriminative Correlation Filter with Channel and Spatial Reliability,” *CVPR*, 2017. — CSRT option in the TERMINAL visual-cue stub (`terminal_tracker.py`).
+11. **MAVLink Developer Guide** — `VISION_POSITION_ESTIMATE`, `ATTITUDE`, `GLOBAL_POSITION_INT`, mission/command messages. https://mavlink.io/en/
+12. **PX4 Autopilot** — external vision / EKF2 vision fusion (`EKF2_EV_CTRL`, height modes). https://docs.px4.io/
+
 ## Disclaimer
 
 JamBoy is research / simulation software for GPS-denied navigation experiments. It does not provide targeting, ROE, or kinetic autonomy. Validate on your own hardware before flight. Use in accordance with applicable law and export controls.
