@@ -2,14 +2,17 @@
 
 Run this **before** trusting any navigation result or moving to PX4 SITL.
 
-## One command (local or any CUDA host)
+## One command (CPU clone gate)
 
 ```bash
 cd /path/to/JamBoy
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-export PYTHONPATH=src
-bash scripts/run_sim_confident.sh
+python scripts/quickstart.py
 ```
+
+Expected last line: `JAMBOY_SIM_PASS`. No `PYTHONPATH`. No CUDA.
+
+CUDA host (optional): `bash scripts/run_sim_confident.sh` after `pip install -e ".[gpu,dev]"`.
 
 Exit code **0** means:
 1. Synthetic mission data generated (frames + GT + baro + degraded sets)

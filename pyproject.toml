@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jamboy"
 version = "0.1.0"
-description = "Jam-proof GPS-denied drone navigation module"
+description = "GPS-denied drone navigation layer (optical flow + map match + EKF). Sim-validated, not flight-certified."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

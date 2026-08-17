@@ -7,24 +7,24 @@ Thanks for helping improve GPS-denied navigation tooling.
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-export PYTHONPATH=src
-python scripts/generate_dummy_data.py
-pytest -q
+python -m pip install -U pip
+python -m pip install -e ".[dev]"
+python scripts/quickstart.py
 ```
 
-GPU extras (optional): `pip install -e ".[gpu,dev]"` or `pip install -r requirements-gpu.txt`.
+Expected: `JAMBOY_SIM_PASS`. No `PYTHONPATH`. CPU only.
+
+GPU extras (optional, not the default gate): `python -m pip install -e ".[gpu,dev]"`.
+
+Windows if `rasterio` is blocked: `powershell -File scripts/check_laptop.ps1` (non-geo subset).
 
 ## Pull requests
 
 1. Keep changes focused; prefer repair/docs over speculative features.
 2. Do not commit secrets, SSH endpoints, API keys, or `.env` files.
-3. Run the CPU gate before opening a PR:
-   - `python scripts/generate_dummy_data.py`
-   - `pytest -q`
-   - `python scripts/run_simulation.py --cpu --profile`
-   - `python scripts/validate_sim.py`
+3. Run `python scripts/quickstart.py` before opening a PR (Linux/CI if Windows is WDAC-blocked).
 4. Update docs when behavior or install steps change.
+5. Do not add "jam-proof", "flight-proven", or certified language. See [`docs/NON_CLAIMS.md`](docs/NON_CLAIMS.md).
 
 ## Code style
 

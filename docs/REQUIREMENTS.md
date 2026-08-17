@@ -21,7 +21,9 @@
 | Fallback | `COMMAND_INT` DO_REPOSITION | On vision failure |
 | Abort | `COMMAND_LONG` RTL | On integrity fail |
 
-## Phase 1 Targets — Clean sim (RTX PRO 6000, 2026-06-08)
+## Phase 1 Targets — Clean sim (synthetic; RTX PRO 6000, 2026-06-08)
+
+These numbers are a dated **synthetic** run. They are not a field CEP and not a jam-resistance claim.
 
 Command: `python scripts/run_simulation.py --gpu --profile`
 
